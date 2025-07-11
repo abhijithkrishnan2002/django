@@ -1,18 +1,68 @@
-from django.db import models
-class Login(models.Model):
-    login_id=models.AutoField(primary_key=True)
-    username=models.CharField(max_length=100)
-    password=models.CharField(max_length=100)
-    usertype=models.CharField(max_length=100)
-    status=models.CharField(max_length=100)
-    class Meta:
-        db_table= 'tbl_login'
-class UserInfo(models.Model):
-    user_id=models.AutoField(primary_key=True)
-    name=models.CharField(max_length=100)
-    address=models.TextField()
-    phone_number=models.BigIntegerField(null=True)
-    email=models.CharField(max_length=100,null=True)
-    login=models.ForeignKey(Login,blank=True,on_delete=models.CASCADE)
-    class Meta:
-        db_table= 'tbl_user'
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>django demo</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="{% static 'css/style.css'%}" rel="stylesheet">
+</head>
+<body>
+<div class="jumbotron text-center">
+        <h1>welcome to django</h1>
+              <a href="{% url 'index' %}" class="btn btn-success">home</a>
+        <a href="{% url 'login' %}" class="btn btn-success">login</a>
+<a href="{% url 'registration' %}" class=" btn btn-success">user registration</a>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+  </div>
+</div>
+<div class="col-lg-6 m-auto">
+    <h1 class=text-center>REGISTER HERE</h1>
+     {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="alert alert-success">{{message}}
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %} 
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+    <div class="form-group">
+        <label for="">name</label>
+        <input type="text" class="form-control" name="name">
+    </div>
+    <div class="form group">
+        <label for="">address</label>
+      <textarea name="address" class="form-control"></textarea>
+    </div> 
+    <div class="form-group">
+        <label for="">phone_number</label>
+        <input type="text" class="form-control" name="phone_number">
+    </div>
+    <div class="form-group">
+        <label for="">email</label>
+        <input type="text" class="form-control" name="email">
+    </div>
+     <div class="form-group">
+        <label for="">username</label>
+        <input type="text" class="form-control" name="username">
+    </div>
+     <div class="form-group">
+        <label for="">password</label>
+        <input type="text" class="form-control" name="password">
+    </div>
+    <div class="form-group">
+        <input type="submit" value="register" class="btn btn-primary">
+        
+    </div>
+    </form>
+</div>
+</body>
+</html>
